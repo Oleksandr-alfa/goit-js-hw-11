@@ -5,11 +5,11 @@ let lightbox = null;
 const loader = document.querySelector('.loader');
 const gallery = document.querySelector('.gallery');
 
-export function galleryItemTemplate({largeImageURL, previewURL, tags, likes, views, comments,  downloads}) {
+export function galleryItemTemplate({largeImageURL, webformatURL, tags, likes, views, comments,  downloads}) {
      return `<li class="gallery-item">
         <a class="gallery-link" href="${largeImageURL}">
         <img class="gallery-img"
-        src="${previewURL}"
+        src="${webformatURL}"
         data-source="${largeImageURL}"
         alt="${tags}"
         width="360"/></a>
