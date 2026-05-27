@@ -1,6 +1,4 @@
 import axios from 'axios';
-import iziToast from 'izitoast';
-
 
 export function getImagesByQuery(query) {
     const BASE_URL = "https://pixabay.com/api/";
@@ -15,6 +13,6 @@ export function getImagesByQuery(query) {
             safesearch: true,
         },
     })
-       
+        .then(response => response.data.hits);
     }
 

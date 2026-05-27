@@ -1,13 +1,10 @@
 
-
-
-
 import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 
 import { getImagesByQuery } from './js/pixabay-api.js';
-import { showLoader, hideLoader } from './js/render-functions.js';
-import { createGallery } from './js/render-functions.js';
+import { showLoader, hideLoader, createGallery, clearGallery } from './js/render-functions.js';
+
 
 const form = document.querySelector('.form');
 
@@ -16,19 +13,17 @@ form.addEventListener('submit', event => {
 
   const query = event.target.elements['search-text'].value.trim();
 
-  if (!query) {
-    return;
-  }
-
+  if (!query) return;
+  
+  clearGallery();
   showLoader();
 
   getImagesByQuery(query)
-     .then(response => {
-            const data = response.data;
-            if (data.hits.length === 0) {
+     .then(hits => {
+            if (hits.length === 0) {
                 throw new Error(`NO_RESULTS`);
             }
-       createGallery(data.hits);
+       createGallery(hits);
         })
         .catch(error => {
             if (error.message === `NO_RESULTS`) {

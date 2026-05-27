@@ -4,16 +4,9 @@ import "simplelightbox/dist/simple-lightbox.min.css";
 let lightbox = null;
 const loader = document.querySelector('.loader');
 const gallery = document.querySelector('.gallery');
-export function createGallery(images) {
-    
-    if (!images || images.length === 0) {
-         gallery.innerHTML = '';
-        return null;
-    } 
-        const markup = images.map(({
-            largeImageURL, tags, previewURL, webformatURL, likes, views, comments, downloads
-        }) => {
-            return `<li class="gallery-item">
+
+export function galleryItemTemplate({largeImageURL, previewURL, tags, likes, views, comments,  downloads}) {
+     return `<li class="gallery-item">
         <a class="gallery-link" href="${largeImageURL}">
         <img class="gallery-img"
         src="${previewURL}"
@@ -26,9 +19,17 @@ export function createGallery(images) {
         <p class="gallery-img-info-text"><b>Comments</b><span>${comments}</span></p>
         <p class="gallery-img-info-text"><b>Downloads</b><span>${downloads}</span></p>
       </div></li> `;
-        })
-            .join('');
-        gallery.innerHTML = markup;
+}
+
+export function createGallery(images) {
+    
+    if (!images || images.length === 0) {
+        return null;
+    } 
+    const markup = images.map(galleryItemTemplate).join('');
+    
+    gallery.innerHTML = markup;
+    
         if (lightbox) {
             lightbox.refresh();
         } else {
@@ -42,10 +43,13 @@ export function createGallery(images) {
 }
   
 export function showLoader() {
-    loader.classList.remove('visible');
+    loader.classList.add('is-visible');
 }
 
 export function hideLoader() {
-    loader.classList.add('visible');
+    loader.classList.remove('is-visible');
 }
 
+export function clearGallery() {
+     gallery.innerHTML = '';
+}
